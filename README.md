@@ -14,12 +14,22 @@ Visit `http://127.0.0.1:8080`. A local server best matches hosted behavior; copy
 
 ## Tools
 
-- **Laundry** (`laundry/`): paste one `COUNTx TYPE` entry per line, Confirm Rates, check garment rates in rupees, then Calculate Total. Repeated garment names are grouped in the bill. Total rows counts input entries; total clothes sums quantities. Garment matching remains case-sensitive, as in `revamp`. Blank lines are ignored; malformed lines must be corrected before calculation. Counts must be non-negative safe integers, and rates must be non-negative decimals (zero is allowed). Decimal arithmetic is exact before display rounding to two decimal places. Check rates shows only types in the current clothes list. Rates for other types stay saved and reappear when those types are added again.
+- **Laundry** (`laundry/`): paste one `COUNTx TYPE` entry per line, Confirm Rates, check garment rates in rupees, then Calculate Total. Repeated garment names are grouped in the bill. Total rows counts input entries; total clothes sums quantities. Garment matching remains case-sensitive, as in `revamp`. Blank lines are ignored; malformed lines must be corrected before calculation. Counts must be non-negative safe integers, and rates must be non-negative decimals (zero is allowed). Check rates shows only types in the current clothes list. Rates for other types stay saved and reappear when those types are added again.
 - **URL converters** (`url_converters/`): Git SSH/HTTPS conversion, GitHub CLI clone commands, Bitbucket username URLs, YouTube shared/embed/watch/Shorts/live links, and Clean & Copy. Home's quick tools contain only YouTube conversion and Clean & Copy. The text cleaner preserves the original English-letter/number behavior. YouTube conversion produces the original canonical watch link and removes timestamps/tracking parameters. Repository inputs target a single owner/repository; nested GitLab groups are not supported.
 - **Colors** (`rgb_to_hex/`): RGB/RGBA to uppercase eight-digit hex (opaque colors retain `FF`), plus 3/4/6/8-digit hex to RGBA. Alpha output keeps the original two-decimal display convention; RGB to hex now rounds alpha directly to the nearest byte.
 - **Counter** (`counter/`): +/− controls; up/right arrow or swipe increments, down/left decrements. Swipe threshold remains 60px. Every change is saved, including reset. Undo reset is available; Save is retained. Arrow keys do not intercept typing inside editable controls.
 - **Markdown** (`render_markdown/`): file picker, drag/drop, editable input, and sanitized preview. Files must be `.md`, `.markdown`, or `.txt` and under 2 MB.
 - **Currency & fees** (`percentage/`): original exchange/fee formulas, with editable actual charge and clearly labelled results. Rates are user-entered, not live.
+
+## Laundry calculation rules
+
+Each input row contributes `quantity × rate` exactly once. Repeated garment types are combined in the details; grouping does not change the payment. Monetary multiplication and addition use decimal arithmetic, not JavaScript floating-point numbers.
+
+The final payment is rounded **once**, after summing exact amounts, to two decimal places using half-up rounding (half a paisa rounds up). Detail amounts and rates retain any additional decimal places so the visible breakdown can be checked without independently rounded rows disagreeing with the total. For example, two amounts of `0.005 rs` sum to `0.01 rs`; each detail stays `0.005`.
+
+Missing or invalid rates and malformed list entries prevent a bill from being shown. The calculation function also rejects invalid counts, ambiguous duplicate rates, and unsafe accumulated clothes counts. Editing the list or rates hides the previous bill until it is recalculated.
+
+The [calculation audit](tests/laundry-audit.md) records the verification and the independent exact-integer reference used to check 2,000 generated bills.
 
 ## Saved data
 
@@ -69,7 +79,7 @@ Each tool has a physical `index.html`; direct links such as `/laundry/` and `/co
 Optional verification (Node.js only; no package installation):
 
 ```powershell
-node --test tests/tools.test.cjs
+node --test tests/tools.test.cjs tests/laundry.test.cjs
 node --check assets/js/app.js
 node --check service-worker.js
 ```
