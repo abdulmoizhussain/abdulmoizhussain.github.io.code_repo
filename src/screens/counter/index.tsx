@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.css';
-import { EventData, Swipeable } from 'react-swipeable';
+// import { EventData, Swipeable } from 'react-swipeable';
 import { LocalStorageKey } from '../../common/constants';
 
 const ArrowKeyNames = {
@@ -61,7 +61,7 @@ export default class RenderMarkdown extends React.Component {
     }
   };
 
-  onDecrement = (eventData: EventData) => {
+  onDecrement = (eventData: any /*EventData*/) => {
     const [deltaX, deltaY] = [Math.abs(eventData.deltaX), Math.abs(eventData.deltaY)];
     if (deltaX > this.swipeRequiredDistance || deltaY > this.swipeRequiredDistance) {
       this.decrementCounter();
@@ -69,7 +69,7 @@ export default class RenderMarkdown extends React.Component {
   };
   decrementCounter = () => { this.setState({ counter: this.state.counter - 1 }, this.saveCurrentCounterIfDivisibleBy10); };
 
-  onIncrement = (eventData: EventData) => {
+  onIncrement = (eventData: any /*EventData*/) => {
     const [deltaX, deltaY] = [Math.abs(eventData.deltaX), Math.abs(eventData.deltaY)];
     if (deltaX > this.swipeRequiredDistance || deltaY > this.swipeRequiredDistance) {
       this.incrementCounter();
@@ -86,7 +86,8 @@ export default class RenderMarkdown extends React.Component {
   render() {
     return (
       <div className="p-2">
-        <Swipeable
+        <div>Swipeable was here</div>
+        {/* <Swipeable
           // style={{ height: document.body.clientHeight * 0.88 }}
           style={{ height: this.swipeAbleHeigh }}
           className="bg-swipe-container p-0 m-0 text-center border border-secondary"
@@ -98,7 +99,7 @@ export default class RenderMarkdown extends React.Component {
           <button className="btn btn-danger btn-sm mt-2" onClick={this.onResetCounter}>Reset</button>
           <button className="btn btn-primary btn-sm mt-2 ml-2" onClick={this.saveCurrentCounter}>Save</button>
           <h1 className="mt-40 un-selectable-text">{this.state.counter}</h1>
-        </Swipeable>
+        </Swipeable> */}
       </div>
     );
   }

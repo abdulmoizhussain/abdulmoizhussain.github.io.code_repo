@@ -1,12 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import Router from './router';
-import * as serviceWorker from './service-worker';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import * as serviceWorker from './common/utils/service-worker';
 import './index.css';
-import "./../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-ReactDOM.render(<Router />, document.getElementById('root'));
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <Router />
+  </React.StrictMode>,
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -15,3 +18,4 @@ serviceWorker.register({
   onUpdate: (_: ServiceWorkerRegistration) => { },
   onSuccess: (_: ServiceWorkerRegistration) => { },
 });
+

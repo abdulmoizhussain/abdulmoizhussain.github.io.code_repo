@@ -1,10 +1,9 @@
-import React from 'react';
 import { Link } from "react-router-dom";
 import { AppRoute } from './../../common/constants';
 import YouTubeUrlConverter from '../../components/you_tube_url_converter';
 import GithubUrlConverter from '../../components/github_url_converter/index';
 import MakeTextSearchable from '../../components/make_text_searchable';
-import { forceUpdateServiceWorker } from '../../service-worker';
+import { forceUpdateServiceWorker } from '../../common/utils/service-worker';
 import './app.css';
 
 export default () => {
@@ -21,10 +20,10 @@ export default () => {
     }
   }
 
-  return <div className="container-fluid font-lg text-white text-center bg-dark p-0">
+  return <div className="container-fluid font-lg text-center p-0 h-100">
     <button
       title="Double click for force-refresh to update this website with latest features."
-      className="btn btn-sm btn-light mt-1"
+      className="btn btn-sm btn-dark mt-1"
       onClick={onForceUpdate}
     >ForceUpdateSite</button>
 
@@ -32,26 +31,11 @@ export default () => {
       <div className="col p-0 m-0">
 
         <ul className='list-unstyled'>
-          <li className="row m-0">
-            <div className="col p-0">
-              <Link className='app_link p-0' to={AppRoute.RgbToHex}>RGB-Hex</Link>
-            </div>
-          </li>
-          <li className="row m-0">
-            <div className="col p-0">
-              <Link className='app_link p-0' to={AppRoute.RenderMarkdown}>Render Markdown</Link>
-            </div>
-          </li>
-          <li className="row m-0">
-            <div className="col p-0">
-              <Link className='app_link p-0' to={AppRoute.Counter}>Counter</Link>
-            </div>
-          </li>
-          <li className="row m-0">
-            <div className="col p-0">
-              <Link className='app_link p-0' to={AppRoute.Percentage}>Percentage</Link>
-            </div>
-          </li>
+          <UtilPageLink to={AppRoute.RgbToHex} text={"RGB-Hex"} />
+          <UtilPageLink to={AppRoute.RenderMarkdown} text={"Render Markdown"} />
+          <UtilPageLink to={AppRoute.Counter} text={"Counter"} />
+          <UtilPageLink to={AppRoute.Percentage} text={"Percentage"} />
+          <UtilPageLink to={AppRoute.Laundry} text={"Laundry"} />
           <li className="row m-0 mt-3"><MakeTextSearchable /></li>
           <li className="row m-0 mt-3"><GithubUrlConverter /></li>
           <li className="row m-0 mt-3"><YouTubeUrlConverter /></li>
@@ -59,5 +43,13 @@ export default () => {
 
       </div>
     </div>
-  </div>
+  </div>;
 };
+
+function UtilPageLink(props: any) {
+  return <li className="row mt-1 p-2">
+    <div className="col p-0">
+      <Link className='app_link border border-info p-1' to={props.to}>{props.text}</Link>
+    </div>
+  </li>;
+}

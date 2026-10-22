@@ -4,6 +4,7 @@ export const AppRoute = {
   RenderMarkdown: '/render_markdown',
   Counter: '/counter',
   Percentage: '/percentage',
+  Laundry: '/laundry',
 };
 
 export const LocalStorageKey = {

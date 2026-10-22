@@ -3,8 +3,8 @@ REM https://www.windows-commandline.com/batch-file-echo/
 
 cd ..
 
-robocopy /MIR .\abdulmoizhussain.github.io\.git\ .\abdulmoizhussain_github_io\build\.git\
-robocopy /MIR .\abdulmoizhussain_github_io\build\ .\abdulmoizhussain.github.io\
+robocopy /MIR .\abdulmoizhussain.github.io\.git\ .\abdulmoizhussain_github_io\dist\.git\
+robocopy /MIR .\abdulmoizhussain_github_io\dist\ .\abdulmoizhussain.github.io\
 
 cd abdulmoizhussain.github.io
 
